@@ -13,19 +13,19 @@
 <script type="text/javascript">
 $( function() {
 $('#searchButton').click(function() {
-$.getJSON('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&include_rts=true&screen_name=mralexgray&count=1', 
-	function(data) {
-		var items=data.Items;
-		var list = $('#list');
-		list.html("");
-		$.each(items, function(key, val) {
-		list.append($(document.createElement('li')).html(val.Name));
-		});
-	list.listview("destroy").listview()
-	});
-	});
-	document.addEventListener("deviceready", onDeviceReady, false);
-	});
+$.getJSON('http://api.alternativeto.net/software/'+$('#searchBox').val()+'/?count=15', 
+function(data) {
+var items=data.Items;
+var list = $('#list');
+list.html("");
+$.each(items, function(key, val) {
+list.append($(document.createElement('li')).html(val.Name));
+});
+list.listview("destroy").listview()
+});
+});
+document.addEventListener("deviceready", onDeviceReady, false);
+});
 function reachableCallback(reachability) {
 // There is no consistency on the format of reachability
 var networkState = reachability.code || reachability;
@@ -43,63 +43,35 @@ navigator.network.isReachable('phonegap.com', reachableCallback);
 
 </head> 
 
-<body> 
-
-<div data-role="page" id="page">
-	<div data-role="header">
-		<h1>Page One</h1>
-	</div>
-	<div data-role="content">	
-		<ul data-role="listview">
-			<li><a href="#page2">Page Two</a></li>
-            <li><a href="#page3">Page Three</a></li>
-			<li><a href="#page4">Page Four</a></li>
-            <button type="submit" data-theme="a" id="searchButton">Search</button>
-            <div data-role="content"> 
-            	<ul data-role="listview" id="list"></ul> 
-            </div> 
-		</ul>		
-	</div>
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div>
+<div data-role="page" id="home"> 
+<div data-role="header"> 
+<h1>AlternativeTo Home</h1> 
+</div> 
+<div data-role="content">
+<p>Find Alternatives To Your favourite Softwares </p>
+<p><a href="#search" data-role="button">Search Alternatives</a></p>    
+<p><a href="#recent" data-role="button">Recent Alternatives</a></p>
+</div> 
+</div> 
+<div data-role="page" id="search"> 
+<div data-role="header" data-position="fixed"> 
+<h1>Search Alternatives</h1> 
+<div class="class= ui-body ui-body-b"> 
+<input type="text" name="search" id="searchBox" value="" data-theme="a" /> 
+<button type="submit" data-theme="a" id="searchButton">Search</button>     
 </div>
-
-<div data-role="page" id="page2">
-	<div data-role="header">
-		<h1>Page Two</h1>
-	</div>
-	<div data-role="content">	
-		Content		
-	</div>
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div>
 </div>
-
-<div data-role="page" id="page3">
-	<div data-role="header">
-		<h1>Page Three</h1>
-	</div>
-	<div data-role="content">	
-		Content		
-	</div>
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div>
+<div data-role="content"> 
+<ul data-role="listview" id="list"></ul> 
+</div> 
 </div>
-
-<div data-role="page" id="page4">
-	<div data-role="header">
-		<h1>Page Four</h1>
-	</div>
-	<div data-role="content">	
-		Content		
-	</div>
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div>
+<div data-role="page" id="recent"> 
+<div data-role="header"> 
+<h1> Recent Alternatives</h1> 
+</div> 
+<div data-role="content"> 
+<p>This app rocks!</p> 
 </div>
-
+</div>
 </body>
 </html>

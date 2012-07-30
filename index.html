@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -8,70 +8,80 @@
 <script src="jquery-mobile/jquery.mobile-1.0a3.min.js" type="text/javascript"></script>
 <!-- This reference to phonegap.js will allow for code hints as long as the current site has been configured as a mobile application. 
 	 To configure the site as a mobile application, go to Site -> Mobile Applications -> Configure Application Framework... -->
-<script src="/phonegap.js" type="text/javascript"></script>
-
+<script src="phonegap.js" type="text/javascript"></script>
 <script type="text/javascript">
+
 $( function() {
-$('#searchButton').click(function() {
-$.getJSON('http://api.alternativeto.net/software/'+$('#searchBox').val()+'/?count=15', 
-function(data) {
-var items=data.Items;
-var list = $('#list');
-list.html("");
-$.each(items, function(key, val) {
-list.append($(document.createElement('li')).html(val.Name));
+	$('#searchButton').click(function() {
+	//$.getJSON('http://api.alternativeto.net/software/'+$('#searchBox').val()+'/?count=15', 
+	$.getJSON("http://api.themoviedb.org/2.1/Movie.search/en/json/23afca60ebf72f8d88cdcae2c4f31866/goonies?callback=?",
+		function(json) {
+			//debugger;
+			console.log(json);
+			var length = json.length;
+			
+			//recorro json
+			for(var i=0; i<=length; i++){
+				if (json[i] != null) {   
+					//console.log(json[i].original_name);      
+					var itemPosters = json[i].posters;
+				} 
+			}
+			
+			var list = $('#list');
+			list.html("");
+			
+			for(var n=0; n<=itemPosters.length; n++){
+				if (itemPosters[n] != null) {   
+					//console.log(itemPosters[n].image.url);  
+					list.append($(document.createElement('li')).html(itemPosters[n].image.url));
+				} 
+			}
+			list.listview('refresh');
+			
+			/*$.each(items, function(key, val) {
+				list.append($(document.createElement('li')).html(val.Name));
+			});
+			list.append($(document.createElement('li')).html('Cancion1'));
+			list.append($(document.createElement('li')).html('Cancion2'));
+			list.append($(document.createElement('li')).html('Cantion3'));
+			list.listview("destroy").listview()
+			*/
+		});
+	});
 });
-list.listview("destroy").listview()
-});
-});
-document.addEventListener("deviceready", onDeviceReady, false);
-});
-function reachableCallback(reachability) {
-// There is no consistency on the format of reachability
-var networkState = reachability.code || reachability;
-var states = {};
-states[NetworkStatus.NOT_REACHABLE]                      = 'No network connection';
-states[NetworkStatus.REACHABLE_VIA_CARRIER_DATA_NETWORK] = 'Carrier data connection';
-states[NetworkStatus.REACHABLE_VIA_WIFI_NETWORK]         = 'WiFi connection';
-alert('Connection type: ' + states[networkState]);
-}
-// PhoneGap is loaded and it is now safe to make calls PhoneGap methods
-function onDeviceReady() {
-navigator.network.isReachable('phonegap.com', reachableCallback);
-}
-</script>  
+</script>
+</head>
 
-</head> 
-
-<div data-role="page" id="home"> 
-<div data-role="header"> 
-<h1>AlternativeTo Home</h1> 
-</div> 
-<div data-role="content">
-<p>Find Alternatives To Your favourite Softwares </p>
-<p><a href="#search" data-role="button">Search Alternatives</a></p>    
-<p><a href="#recent" data-role="button">Recent Alternatives</a></p>
-</div> 
-</div> 
-<div data-role="page" id="search"> 
-<div data-role="header" data-position="fixed"> 
-<h1>Search Alternatives</h1> 
-<div class="class= ui-body ui-body-b"> 
-<input type="text" name="search" id="searchBox" value="" data-theme="a" /> 
-<button type="submit" data-theme="a" id="searchButton">Search</button>     
+<div data-role="page" id="home">
+  <div data-role="header">
+    <h1>AlternativeTo Home</h1>
+  </div>
+  <div data-role="content">
+    <p>Find Alternatives To Your favourite Softwares </p>
+    <p><a href="#search" data-role="button">Search Alternatives</a></p>
+    <p><a href="#recent" data-role="button">Recent Alternatives</a></p>
+  </div>
 </div>
+<div data-role="page" id="search">
+  <div data-role="header" data-position="fixed">
+    <h1>Search Alternatives</h1>
+    <div class="class= ui-body ui-body-b">
+      <!-- <input type="text" name="search" id="searchBox" value="" data-theme="a" /> -->
+      <button type="submit" data-theme="a" id="searchButton">Search</button>
+    </div>
+  </div>
+  <div data-role="content">
+    <ul data-role="listview" id="list">
+    </ul>
+  </div>
 </div>
-<div data-role="content"> 
-<ul data-role="listview" id="list"></ul> 
-</div> 
+<div data-role="page" id="recent">
+  <div data-role="header">
+    <h1> Recent Alternatives</h1>
+  </div>
+  <div data-role="content">
+    <p>This app rocks!</p>
+  </div>
 </div>
-<div data-role="page" id="recent"> 
-<div data-role="header"> 
-<h1> Recent Alternatives</h1> 
-</div> 
-<div data-role="content"> 
-<p>This app rocks!</p> 
-</div>
-</div>
-</body>
-</html>
+</body></html>

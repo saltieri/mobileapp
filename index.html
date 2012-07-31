@@ -17,7 +17,7 @@ $( function() {
 	$.getJSON("http://api.themoviedb.org/2.1/Movie.search/en/json/23afca60ebf72f8d88cdcae2c4f31866/goonies?callback=?",
 		function(json) {
 			//debugger;
-			console.log(json);
+			//console.log(json);
 			var length = json.length;
 			
 			//recorro json
@@ -37,7 +37,8 @@ $( function() {
 					list.append($(document.createElement('li')).html(itemPosters[n].image.url));
 				} 
 			}
-			list.listview('refresh');
+			//list.listview('refresh');
+			list.listview("destroy").listview();
 			
 			/*$.each(items, function(key, val) {
 				list.append($(document.createElement('li')).html(val.Name));

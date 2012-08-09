@@ -14,29 +14,24 @@
 $( function() {
 	$('#searchButton').click(function() {
 	//$.getJSON('http://api.alternativeto.net/software/'+$('#searchBox').val()+'/?count=15', 
-	$.getJSON("http://api.themoviedb.org/2.1/Movie.search/en/json/23afca60ebf72f8d88cdcae2c4f31866/goonies?callback=?",
+	//$.getJSON("http://api.themoviedb.org/2.1/Movie.search/en/json/23afca60ebf72f8d88cdcae2c4f31866/goonies?callback=?",
+	$.getJSON("http://192.168.1.3:13000/api/songs",
 		function(json) {
 			//debugger;
 			//console.log(json);
 			var length = json.length;
+			var list = $('#list');
+			list.html("");
 			
 			//recorro json
 			for(var i=0; i<=length; i++){
 				if (json[i] != null) {   
 					//console.log(json[i].original_name);      
-					var itemPosters = json[i].posters;
+					var item = json[i].Name;
+					list.append($(document.createElement('li')).html(item));
 				} 
 			}
-			
-			var list = $('#list');
-			list.html("");
-			
-			for(var n=0; n<=itemPosters.length; n++){
-				if (itemPosters[n] != null) {   
-					//console.log(itemPosters[n].image.url);  
-					list.append($(document.createElement('li')).html(itemPosters[n].image.url));
-				} 
-			}
+
 			//list.listview('refresh');
 			list.listview("destroy").listview();
 			
